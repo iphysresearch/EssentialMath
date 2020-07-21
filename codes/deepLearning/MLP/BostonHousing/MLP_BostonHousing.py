@@ -36,8 +36,7 @@ def baseline_model():
 	model.compile(loss='mean_squared_error', optimizer='adam')
 	return model
 # evaluate model with standardized dataset
-estimators = []
-estimators.append(('standardize', StandardScaler()))
+estimators = [('standardize', StandardScaler())]
 estimators.append(('mlp', KerasRegressor(build_fn=baseline_model, epochs=50, batch_size=5, verbose=0)))
 pipeline = Pipeline(estimators)
 kfold = KFold(n_splits=10)
@@ -57,8 +56,7 @@ def larger_model():
 	model.compile(loss='mean_squared_error', optimizer='adam')
 	return model
 
-estimators = []
-estimators.append(('standardize', StandardScaler()))
+estimators = [('standardize', StandardScaler())]
 estimators.append(('mlp', KerasRegressor(build_fn=larger_model, epochs=50, batch_size=5, verbose=0)))
 pipeline = Pipeline(estimators)
 kfold = KFold(n_splits=10)

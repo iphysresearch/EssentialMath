@@ -53,8 +53,7 @@ class NGramLanguageModeler(nn.Module):
         embeds = self.embeddings(inputs).view((1, -1))
         out = torch.relu(self.linear1(embeds))
         out = self.linear2(out)
-        log_probs = torch.log_softmax(out, dim=1)
-        return log_probs
+        return torch.log_softmax(out, dim=1)
 
 
 losses = []
@@ -62,7 +61,7 @@ loss_function = nn.NLLLoss()
 model = NGramLanguageModeler(len(vocab), EMBEDDING_DIM, CONTEXT_SIZE)
 optimizer = optim.SGD(model.parameters(), lr=0.001)
 
-for epoch in range(10):
+for _ in range(10):
     total_loss = 0
     for context, target in trigrams:
 

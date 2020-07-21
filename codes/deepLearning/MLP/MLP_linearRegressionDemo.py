@@ -6,6 +6,7 @@ Created on Mon Nov 18 21:30:13 2019
 @author: yangyutu
 """
 
+
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -17,8 +18,8 @@ import seaborn as sns
 plt.close('all')
 sns.set()
 mpl.rcParams.update({'font.size': 20})
-mpl.rc('xtick', labelsize=20) 
-mpl.rc('ytick', labelsize=20) 
+mpl.rc('xtick', labelsize=20)
+mpl.rc('ytick', labelsize=20)
 plt.rcParams['xtick.labelsize']=20
 plt.rcParams['ytick.labelsize']=20
 
@@ -51,29 +52,29 @@ y = y_raw + 0.3 * np.random.randn(x.shape[0])
 
 input_size_list = [1, 3, 6, 10]
 
+output_size = 1
+nStep = 300
+
 for idx, input_size in enumerate(input_size_list):
-    output_size = 1
     # Linear regression model
     model = nn.Linear(input_size, output_size)
-    
+
     # Loss and optimizer
     criterion = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.1)
-    
-    nStep = 300
-    
+
     X_torch = torch.from_numpy(X[:,0:input_size]).float()
     y_torch = torch.from_numpy(y).float()
-    for i in range(nStep):
+    for _ in range(nStep):
         y_pred = model(X_torch).squeeze()
         optimizer.zero_grad()
         loss = criterion(y_torch, y_pred)
         loss.backward()
         optimizer.step()
-        
+
     y_pred = model(X_torch).squeeze().detach().numpy()
-    
-    
+
+
     plt.figure(2, figsize=(14, 14))
     plt.subplot(2,2,idx+1)
     plt.plot(x, y, 'o', markerfacecolor='none')
